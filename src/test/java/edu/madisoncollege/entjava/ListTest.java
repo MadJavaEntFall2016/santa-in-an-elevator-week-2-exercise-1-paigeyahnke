@@ -38,5 +38,24 @@ public class ListTest {
         assertTrue("List missing inserted element", myList.contains(elementToInsert));
     }
 
+    @Test
+    public void testRemoveSuccess() {
+        String firstElement = myList.get(0);
+        myList.remove(0);
+        assertEquals("List size is incorrect", 2, myList.size());
+        assertTrue("List deleted incorrect element", !myList.contains(firstElement));
+    }
 
+    @Test
+    public void testGetSucess() {
+        String testString = "Test";
+        myList.add(0, testString);
+
+        assertEquals("Failed to retrieve list item.", testString, myList.get(0));
+    }
+
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void testException() {
+        myList.get(10);
+    }
 }

@@ -1,5 +1,8 @@
 package edu.madisoncollege.entjava;
 
+import java.io.*;
+import org.apache.log4j.*;
+
 
 /**
  * Created by paulawaite on 9/7/16.
@@ -36,6 +39,50 @@ package edu.madisoncollege.entjava;
  */
 
 public class SantaInAnElevator {
+    private final Logger logger = Logger.getLogger(this.getClass());
 
+    public Integer determineFloorNumber(String instructions) {
+        Integer floorNumber = 0;
 
+        Integer index = 0;
+        while (index < instructions.length()) {
+            String currentCharacter = Character.toString(instructions.charAt(index));
+
+            if (currentCharacter.equals("(")) {
+                floorNumber++;
+            } else if (currentCharacter.equals(")")) {
+                floorNumber--;
+            }
+
+            index++;
+        }
+
+        logger.info("Floor number is: " + floorNumber);
+        return floorNumber;
+    }
+
+    public String getInstructions() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("SantaUpDown.txt").getFile());
+
+        String instructions = "";
+        try (FileReader reader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(reader)){
+
+            while(bufferedReader.ready()) {
+                String line = bufferedReader.readLine();
+                instructions += line;
+                logger.info("Read in line: " + line);
+            }
+
+        } catch (FileNotFoundException fileNotFoundException) {
+            logger.error("File not found: " + fileNotFoundException);
+        } catch (IOException ioException) {
+            logger.error("There was a problem reading the file." + ioException);
+        } catch (Exception exception) {
+            logger.error("There was a major issue. " + exception);
+        }
+
+        return instructions;
+    }
 }
