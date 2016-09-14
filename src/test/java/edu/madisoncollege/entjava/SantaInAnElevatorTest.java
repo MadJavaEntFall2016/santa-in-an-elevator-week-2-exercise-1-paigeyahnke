@@ -14,6 +14,6 @@ public class SantaInAnElevatorTest {
         SantaInAnElevator test1 = new SantaInAnElevator();
         String instructions = test1.getInstructions();
         Integer floorNumber = test1.determineFloorNumber(instructions);
+        assertFalse(floorNumber == 5);
     }
-
 }
